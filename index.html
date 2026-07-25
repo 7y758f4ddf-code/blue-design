@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blue Design — Interior Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#F6F8FB;
+    --ivory-deep:#EBF0F6;
+    --ink:#1E2733;
+    --forest:#1F4E79;
+    --forest-deep:#122A3E;
+    --accent:#7FA8C9;
+    --line:#D4DFEA;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    letter-spacing:0.02em;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
+
+  /* whiplash divider */
+  .divider{width:100%;display:flex;justify-content:center;margin:0 auto;}
+  .divider svg{width:220px;height:34px;}
+  .divider path{stroke:var(--accent);stroke-width:1.4;fill:none;}
+
+  /* header */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(250,247,240,0.0);
+    transition:background .4s ease, box-shadow .4s ease, padding .4s ease;
+    padding:26px 0;
+  }
+  header.scrolled{
+    background:rgba(250,247,240,0.94);
+    box-shadow:0 1px 0 var(--line);
+    padding:14px 0;
+    backdrop-filter:blur(6px);
+  }
+  header .wrap{display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand img{height:38px;width:38px;object-fit:contain;filter:drop-shadow(0 1px 1px rgba(0,0,0,.15));}
+  .brand span{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:0.12em;color:var(--forest-deep);}
+  header.scrolled .brand span, header.scrolled nav a{color:var(--forest-deep);}
+  header:not(.scrolled) .brand span, header:not(.scrolled) nav a{color:#fff;}
+  nav{display:flex;gap:36px;font-size:14px;letter-spacing:0.08em;text-transform:uppercase;}
+  nav a{opacity:.9;position:relative;padding-bottom:4px;transition:opacity .3s;}
+  nav a:hover{opacity:1;}
+
+  /* hero */
+  .hero{
+    position:relative;height:100vh;min-height:640px;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    color:#fff;
+  }
+  .hero .bg{
+    position:absolute;inset:0;
+    background:url('assets/brand/hero.jpg') center 38%/cover no-repeat;
+  }
+  .hero .bg::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(18,42,62,.55) 0%, rgba(18,42,62,.72) 55%, rgba(18,42,62,.88) 100%);
+  }
+  .hero-content{position:relative;z-index:2;padding:0 24px;max-width:760px;}
+  .hero-content .eyebrow{
+    letter-spacing:0.35em;text-transform:uppercase;font-size:12px;color:var(--accent);margin-bottom:22px;display:block;
+  }
+  .hero-content h1{font-size:clamp(48px,8vw,92px);line-height:1.05;font-weight:500;margin-bottom:20px;}
+  .hero-content p{font-size:18px;font-weight:300;letter-spacing:0.03em;opacity:.92;margin-bottom:36px;}
+  .btn{
+    display:inline-block;border:1px solid var(--accent);color:#fff;
+    padding:14px 36px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;
+    transition:all .35s ease;
+  }
+  .btn:hover{background:var(--accent);color:var(--forest-deep);}
+  .scroll-cue{
+    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+    z-index:2;color:#fff;opacity:.75;font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+  }
+  .scroll-cue::after{
+    content:'';display:block;width:1px;height:36px;background:rgba(255,255,255,.6);
+    margin:10px auto 0;animation:drop 2s infinite;
+  }
+  @keyframes drop{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+  section{padding:130px 0;}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 70px;}
+  .section-head .eyebrow{
+    letter-spacing:0.35em;text-transform:uppercase;font-size:12px;color:var(--accent);display:block;margin-bottom:18px;
+  }
+  .section-head h2{font-size:clamp(34px,4vw,50px);color:var(--forest-deep);margin-bottom:20px;}
+  .section-head p{font-size:16px;color:#55606e;}
+
+  /* philosophy */
+  .philosophy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:56px;}
+  .phil-item{text-align:center;padding:0 10px;}
+  .phil-icon{
+    width:64px;height:64px;margin:0 auto 26px;border-radius:50%;
+    border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;
+    color:var(--accent);
+  }
+  .phil-icon svg{width:26px;height:26px;stroke:var(--accent);fill:none;stroke-width:1.3;}
+  .phil-item h3{font-size:23px;color:var(--forest-deep);margin-bottom:14px;}
+  .phil-item p{font-size:15px;color:#55606e;}
+
+  /* process */
+  .process{background:var(--forest-deep);color:var(--ivory);}
+  .process .section-head h2{color:var(--ivory);}
+  .process .section-head p{color:#b9c9d8;}
+  .process-layout{display:grid;grid-template-columns:1fr 1.05fr;gap:70px;align-items:center;}
+  .process-steps{display:flex;flex-direction:column;gap:0;}
+  .step{display:flex;gap:26px;padding:26px 0;border-bottom:1px solid rgba(250,247,240,.14);}
+  .step:last-child{border-bottom:none;}
+  .step .num{font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--accent);min-width:52px;}
+  .step h4{font-size:20px;margin-bottom:6px;color:var(--ivory);font-family:'Cormorant Garamond',serif;font-weight:500;}
+  .step p{font-size:14px;color:#b9c9d8;}
+  .process-image{position:relative;}
+  .process-image img{width:100%;display:block;border-radius:2px 60px 2px 60px;box-shadow:0 30px 60px rgba(0,0,0,.4);}
+  .process-note{margin-top:60px;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:#d6e0ea;max-width:640px;margin-left:auto;margin-right:auto;}
+
+  /* gallery */
+  .gallery-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
+  }
+  .g-item{position:relative;overflow:hidden;aspect-ratio:4/3;cursor:pointer;}
+  .g-item img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;display:block;}
+  .g-item:hover img{transform:scale(1.08);}
+  .g-caption{
+    position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;
+    padding:22px;background:linear-gradient(180deg,rgba(18,42,62,0) 40%,rgba(18,42,62,.85) 100%);
+    opacity:0;transition:opacity .4s ease;
+  }
+  .g-item:hover .g-caption{opacity:1;}
+  .g-caption .tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+  .g-caption h4{color:#fff;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;}
+
+  /* impact */
+  .impact{background:var(--ivory-deep);}
+  .impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:50px;text-align:center;}
+  .impact-item h3{font-size:21px;color:var(--forest-deep);margin-bottom:12px;}
+  .impact-item p{font-size:14.5px;color:#55606e;}
+
+  /* stat banner */
+  .stat-banner{
+    display:flex;align-items:center;justify-content:center;gap:18px;text-align:center;
+    padding:60px 40px;margin:0 auto 0;
+  }
+  .stat-banner .num{font-family:'Cormorant Garamond',serif;font-size:64px;color:var(--forest-deep);}
+  .stat-banner p{max-width:360px;text-align:left;font-size:15px;color:#55606e;}
+
+  /* education */
+  .edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;}
+  .edu-card{
+    border:1px solid var(--line);padding:34px 28px;text-align:center;
+    transition:border-color .3s ease, box-shadow .3s ease;
+  }
+  .edu-card:hover{border-color:var(--forest);box-shadow:0 14px 30px rgba(20,45,70,.08);}
+  .edu-card h4{font-size:19px;color:var(--forest-deep);margin-bottom:8px;font-family:'Cormorant Garamond',serif;}
+  .edu-card .school{font-size:14px;color:var(--accent);margin-bottom:4px;}
+  .edu-card .loc{font-size:12px;color:#7c8b9c;letter-spacing:.05em;text-transform:uppercase;}
+
+  /* contact */
+  .contact{
+    position:relative;color:#fff;text-align:center;padding:150px 0;
+    background:linear-gradient(180deg, var(--forest-deep), #0d1c2a);
+  }
+  .contact .eyebrow{letter-spacing:.35em;text-transform:uppercase;font-size:12px;color:var(--accent);display:block;margin-bottom:22px;}
+  .contact h2{font-size:clamp(36px,5vw,58px);margin-bottom:22px;}
+  .contact p.lead{max-width:520px;margin:0 auto 50px;color:#b9c9d8;font-size:16px;}
+  .contact-links{display:flex;gap:60px;justify-content:center;flex-wrap:wrap;}
+  .contact-links a{display:block;}
+  .contact-links .label{display:block;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+  .contact-links .value{font-family:'Cormorant Garamond',serif;font-size:22px;}
+
+  footer{background:#0d1c2a;color:#8a927e;padding:26px 0;text-align:center;font-size:12px;letter-spacing:.05em;}
+
+  @media (max-width:900px){
+    nav{display:none;}
+    .philosophy-grid,.impact-grid,.edu-grid{grid-template-columns:1fr;gap:44px;}
+    .process-layout{grid-template-columns:1fr;gap:44px;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    section{padding:90px 0;}
+    .stat-banner{flex-direction:column;text-align:center;}
+    .stat-banner p{text-align:center;}
+  }
+  @media (max-width:560px){
+    .gallery-grid{grid-template-columns:1fr;}
+    .wrap{padding:0 24px;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/brand/logo.png" alt="Blue Design logo">
+      <span>BLUE&nbsp;DESIGN</span>
+    </div>
+    <nav>
+      <a href="#philosophy">Philosophy</a>
+      <a href="#process">Process</a>
+      <a href="#work">Work</a>
+      <a href="#education">Studio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="bg"></div>
+  <div class="hero-content">
+    <span class="eyebrow">Interior Design Studio</span>
+    <h1>Blue Design</h1>
+    <p>Interior designer · Spatial storyteller · Visionary creator<br>by Aynür Fahim</p>
+    <a href="#work" class="btn">View The Work</a>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</section>
+
+<section id="philosophy">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Design Philosophy</span>
+      <h2>Form follows feeling</h2>
+      <p>Every project begins with the people who will live inside it — and ends with a space that tells their story.</p>
+    </div>
+    <div class="philosophy-grid">
+      <div class="phil-item">
+        <div class="phil-icon"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-8h6v8"/></svg></div>
+        <h3>Human-Centric Functionality</h3>
+        <p>Every space must serve the people who inhabit it — balancing artistic intuition with practical, livable design.</p>
+      </div>
+      <div class="phil-item">
+        <div class="phil-icon"><svg viewBox="0 0 24 24"><path d="M3 12c3-6 15-6 18 0-3 6-15 6-18 0Z"/><circle cx="12" cy="12" r="2.6"/></svg></div>
+        <h3>Spaces That Tell a Story</h3>
+        <p>Materials, light, and form work in concert to create environments rich with narrative and emotional resonance.</p>
+      </div>
+      <div class="phil-item">
+        <div class="phil-icon"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <h3>Elevating Daily Experience</h3>
+        <p>My core mission: transforming ordinary environments into extraordinary spaces that inspire and endure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <svg viewBox="0 0 220 34"><path d="M0 17 C40 0, 60 34, 100 17 S 160 0, 220 17"/></svg>
+</div>
+
+<section id="process" class="process">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The Creative Process</span>
+      <h2>From concept to construction</h2>
+      <p>Every project follows a disciplined yet intuitive path — bridging technical precision with client aspirations at every stage.</p>
+    </div>
+    <div class="process-layout">
+      <div class="process-steps">
+        <div class="step"><div class="num">01</div><div><h4>Discover</h4><p>Client vision and site analysis.</p></div></div>
+        <div class="step"><div class="num">02</div><div><h4>Design</h4><p>Concept sketches and materials.</p></div></div>
+        <div class="step"><div class="num">03</div><div><h4>Develop</h4><p>3D renders and technical documentation.</p></div></div>
+        <div class="step"><div class="num">04</div><div><h4>Deliver</h4><p>Construction oversight and handoff.</p></div></div>
+      </div>
+      <div class="process-image">
+        <img src="assets/process/process-sketch.jpg" alt="Hand-drawn concept floor plan">
+      </div>
+    </div>
+    <p class="process-note">"Sustainable materials and mindful sourcing are woven into every phase — ensuring spaces that are as responsible as they are beautiful."</p>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap" style="max-width:1180px;padding:0 6px 0;">
+    <div class="section-head">
+      <span class="eyebrow">Selected Work</span>
+      <h2>Project Highlights</h2>
+      <p>A collection of residential concepts — from hand-drawn plans to fully rendered interiors.</p>
+    </div>
+  </div>
+  <div class="gallery-grid">
+    <div class="g-item"><img src="assets/gallery/gallery1.jpg" alt="Living room with fireplace"><div class="g-caption"><span class="tag">Project 02</span><h4>Open-Concept Living</h4></div></div>
+    <div class="g-item"><img src="assets/gallery/gallery2.jpg" alt="Sectional sofa lounge"><div class="g-caption"><span class="tag">Project 02</span><h4>Collaborative Lounge</h4></div></div>
+    <div class="g-item"><img src="assets/gallery/gallery4.jpg" alt="Living room corner"><div class="g-caption"><span class="tag">Project 02</span><h4>Adaptive Living Zones</h4></div></div>
+    <div class="g-item"><img src="assets/gallery/gallery5.jpg" alt="Open living and kitchen"><div class="g-caption"><span class="tag">Project 04</span><h4>Living Room + Kitchen</h4></div></div>
+    <div class="g-item"><img src="assets/gallery/gallery6.jpg" alt="Kitchen and lounge"><div class="g-caption"><span class="tag">Project 04</span><h4>Kitchen & Gathering Space</h4></div></div>
+    <div class="g-item"><img src="assets/gallery/gallery9.jpg" alt="Guest bedroom"><div class="g-caption"><span class="tag">Project 04</span><h4>Guest Bedroom Suite</h4></div></div>
+    <div class="g-item"><img src="assets/gallery/gallery7.jpg" alt="Master bedroom"><div class="g-caption"><span class="tag">Project 04</span><h4>Master Bedroom</h4></div></div>
+    <div class="g-item"><img src="assets/gallery/gallery8.jpg" alt="Bedroom detail"><div class="g-caption"><span class="tag">Project 04</span><h4>Bedroom Detail</h4></div></div>
+  </div>
+</section>
+
+<div class="divider">
+  <svg viewBox="0 0 220 34"><path d="M0 17 C40 34, 60 0, 100 17 S 160 34, 220 17"/></svg>
+</div>
+
+<section class="impact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Technical Proficiency</span>
+      <h2>Rigor beyond the aesthetic</h2>
+      <p>Every detail is documented, every system coordinated — from lighting plans to section drawings.</p>
+    </div>
+    <div class="impact-grid">
+      <div class="impact-item"><h3>Integrated Lighting Design</h3><p>Lighting plans developed in tandem with floor plan logistics for seamless spatial harmony.</p></div>
+      <div class="impact-item"><h3>Precision Documentation</h3><p>Detailed elevations and section drawings ensure design intent is faithfully executed on-site.</p></div>
+      <div class="impact-item"><h3>Software Mastery</h3><p>High-fidelity rendering and spatial mapping tools bring visions to life before a single wall is built.</p></div>
+    </div>
+    <div class="stat-banner">
+      <div class="num">+30%</div>
+      <p>Usable square footage increased by 30% in a residential transformation project — without expanding the footprint.</p>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Studio & Training</span>
+      <h2>Education</h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <h4>Level 3 Diploma in Professional Interior Design</h4>
+        <div class="school">National Design Academy</div>
+        <div class="loc">Dubai, UAE</div>
+      </div>
+      <div class="edu-card">
+        <h4>AutoCAD for Interior Design</h4>
+        <div class="school">The Designer's Studio</div>
+        <div class="loc">Dubai, UAE</div>
+      </div>
+      <div class="edu-card">
+        <h4>SketchUp for Interior Design</h4>
+        <div class="school">The Designer's Studio</div>
+        <div class="loc">Dubai, UAE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <span class="eyebrow">Looking Forward</span>
+    <h2>Let's build together</h2>
+    <p class="lead">The next chapter focuses on adaptive reuse and luxury residential — bringing bold, personal visions to life with precision and care.</p>
+    <div class="contact-links">
+      <a href="mailto:aynurfahim@icloud.com">
+        <span class="label">Get in touch</span>
+        <span class="value">aynurfahim@icloud.com</span>
+      </a>
+      <a href="tel:+971567924442">
+        <span class="label">Connect</span>
+        <span class="value">+971 56 792 4442</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>&copy; 2026 Blue Design — Aynür Fahim. All rights reserved.</footer>
+
+<script>
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+</script>
+
+</body>
+</html>
