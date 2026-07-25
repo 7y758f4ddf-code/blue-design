@@ -104,15 +104,32 @@
   .stat-strip .num{font-family:'Cormorant Garamond',serif;font-size:56px;color:var(--navy);font-weight:600;}
   .stat-strip p{font-size:15px;color:var(--muted);max-width:480px;}
 
-  /* ---- portfolio grid ---- */
-  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
-  .g-item{position:relative;overflow:hidden;aspect-ratio:4/3;cursor:pointer;}
-  .g-item img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;}
-  .g-item:hover img{transform:scale(1.06);}
-  .g-caption{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;background:linear-gradient(180deg,rgba(11,29,43,0) 45%,rgba(11,29,43,.88) 100%);opacity:0;transition:opacity .35s ease;}
-  .g-item:hover .g-caption{opacity:1;}
-  .g-caption .tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
-  .g-caption h4{color:#fff;font-size:19px;}
+  /* ---- portfolio: grouped slideshows ---- */
+  .project-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;}
+  .project-card{position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--navy-deep);}
+  .project-card .slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease;}
+  .project-card .slide.active{opacity:1;}
+  .project-card .slide img{width:100%;height:100%;object-fit:cover;}
+  .project-card .overlay{
+    position:absolute;inset:0;z-index:3;pointer-events:none;
+    display:flex;flex-direction:column;justify-content:flex-end;padding:24px;
+    background:linear-gradient(180deg,rgba(11,29,43,0) 55%,rgba(11,29,43,.9) 100%);
+  }
+  .project-card .tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+  .project-card h4{color:#fff;font-size:22px;}
+  .project-card .slide-caption{color:#dbe6ef;font-size:13px;margin-top:2px;}
+  .project-card .dots{position:absolute;bottom:20px;right:22px;z-index:4;display:flex;gap:7px;pointer-events:auto;}
+  .project-card .dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:background .25s;border:none;padding:0;}
+  .project-card .dot.active{background:#fff;}
+  .project-card .arrow{
+    position:absolute;top:50%;transform:translateY(-50%);z-index:4;pointer-events:auto;
+    width:34px;height:34px;border-radius:50%;background:rgba(11,29,43,.45);border:1px solid rgba(255,255,255,.5);
+    color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;opacity:0;transition:opacity .25s, background .25s;
+  }
+  .project-card:hover .arrow{opacity:1;}
+  .project-card .arrow:hover{background:rgba(11,29,43,.75);}
+  .project-card .arrow.prev{left:16px;}
+  .project-card .arrow.next{right:16px;}
 
   /* ---- contact ---- */
   .contact{background:var(--navy);color:#fff;padding:110px 0;text-align:center;}
@@ -129,14 +146,13 @@
     nav{display:none;}
     .philosophy-grid,.tech-grid{grid-template-columns:1fr;gap:40px;}
     .process-layout{grid-template-columns:1fr;gap:40px;}
-    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .project-grid{grid-template-columns:1fr;}
     section.content{padding:70px 0;}
     .stat-strip{flex-direction:column;text-align:center;}
     .edu-item{flex-direction:column;align-items:flex-start;}
     .edu-item .meta{text-align:left;}
   }
   @media (max-width:560px){
-    .gallery-grid{grid-template-columns:1fr;}
     .wrap{padding:0 22px;}
     .contact-links{gap:36px;}
   }
@@ -257,15 +273,48 @@
       <p>A collection of residential concepts — from hand-drawn plans to fully rendered interiors.</p>
     </div>
   </div>
-  <div class="gallery-grid" style="margin-top:4px;">
-    <div class="g-item"><img src="assets/gallery/gallery1.jpg" alt="Living room with fireplace"><div class="g-caption"><span class="tag">Project 02</span><h4>Open-Concept Living</h4></div></div>
-    <div class="g-item"><img src="assets/gallery/gallery2.jpg" alt="Sectional sofa lounge"><div class="g-caption"><span class="tag">Project 02</span><h4>Collaborative Lounge</h4></div></div>
-    <div class="g-item"><img src="assets/gallery/gallery4.jpg" alt="Living room corner"><div class="g-caption"><span class="tag">Project 02</span><h4>Adaptive Living Zones</h4></div></div>
-    <div class="g-item"><img src="assets/gallery/gallery5.jpg" alt="Open living and kitchen"><div class="g-caption"><span class="tag">Project 04</span><h4>Living Room + Kitchen</h4></div></div>
-    <div class="g-item"><img src="assets/gallery/gallery6.jpg" alt="Kitchen and lounge"><div class="g-caption"><span class="tag">Project 04</span><h4>Kitchen &amp; Gathering Space</h4></div></div>
-    <div class="g-item"><img src="assets/gallery/gallery9.jpg" alt="Guest bedroom"><div class="g-caption"><span class="tag">Project 04</span><h4>Guest Bedroom Suite</h4></div></div>
-    <div class="g-item"><img src="assets/gallery/gallery7.jpg" alt="Master bedroom"><div class="g-caption"><span class="tag">Project 04</span><h4>Master Bedroom</h4></div></div>
-    <div class="g-item"><img src="assets/gallery/gallery8.jpg" alt="Bedroom detail"><div class="g-caption"><span class="tag">Project 04</span><h4>Bedroom Detail</h4></div></div>
+  <div class="content wrap" style="padding-top:60px;padding-bottom:60px;">
+    <div class="project-grid">
+      <div class="project-card" data-project="0">
+        <div class="slide active"><img src="assets/gallery/gallery1.jpg" alt="Living room with fireplace"></div>
+        <div class="slide"><img src="assets/gallery/gallery2.jpg" alt="Sectional sofa lounge"></div>
+        <div class="slide"><img src="assets/gallery/gallery4.jpg" alt="Living room corner"></div>
+        <button class="arrow prev" aria-label="Previous">&#8249;</button>
+        <button class="arrow next" aria-label="Next">&#8250;</button>
+        <div class="overlay">
+          <span class="tag">Project 02</span>
+          <h4>Open-Concept Living</h4>
+          <span class="slide-caption">Open-Concept Living · Collaborative Lounge · Adaptive Living Zones</span>
+        </div>
+        <div class="dots">
+          <button class="dot active" data-i="0"></button>
+          <button class="dot" data-i="1"></button>
+          <button class="dot" data-i="2"></button>
+        </div>
+      </div>
+
+      <div class="project-card" data-project="1">
+        <div class="slide active"><img src="assets/gallery/gallery5.jpg" alt="Open living and kitchen"></div>
+        <div class="slide"><img src="assets/gallery/gallery6.jpg" alt="Kitchen and lounge"></div>
+        <div class="slide"><img src="assets/gallery/gallery9.jpg" alt="Guest bedroom"></div>
+        <div class="slide"><img src="assets/gallery/gallery7.jpg" alt="Master bedroom"></div>
+        <div class="slide"><img src="assets/gallery/gallery8.jpg" alt="Bedroom detail"></div>
+        <button class="arrow prev" aria-label="Previous">&#8249;</button>
+        <button class="arrow next" aria-label="Next">&#8250;</button>
+        <div class="overlay">
+          <span class="tag">Project 04</span>
+          <h4>Residential Suite</h4>
+          <span class="slide-caption">Living Room + Kitchen · Guest Bedroom · Master Bedroom · Detail</span>
+        </div>
+        <div class="dots">
+          <button class="dot active" data-i="0"></button>
+          <button class="dot" data-i="1"></button>
+          <button class="dot" data-i="2"></button>
+          <button class="dot" data-i="3"></button>
+          <button class="dot" data-i="4"></button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -288,6 +337,32 @@
 </section>
 
 <footer>&copy; 2026 Blue Design — Aynür Fahim. All rights reserved.</footer>
+
+<script>
+  document.querySelectorAll('.project-card').forEach(card => {
+    const slides = [...card.querySelectorAll('.slide')];
+    const dots = [...card.querySelectorAll('.dot')];
+    let current = 0;
+    let timer;
+
+    function show(i){
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (i + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+    function next(){ show(current + 1); }
+    function prev(){ show(current - 1); }
+    function restart(){ clearInterval(timer); timer = setInterval(next, 4200); }
+
+    card.querySelector('.next').addEventListener('click', () => { next(); restart(); });
+    card.querySelector('.prev').addEventListener('click', () => { prev(); restart(); });
+    dots.forEach(dot => dot.addEventListener('click', () => { show(parseInt(dot.dataset.i, 10)); restart(); }));
+
+    restart();
+  });
+</script>
 
 </body>
 </html>
